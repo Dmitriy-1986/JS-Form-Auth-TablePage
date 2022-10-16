@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form JS</title>
+
+	<style type="text/css">
+		* {
+			box-sizing: border-box;
+			font-family: sans-serif;
+		}
+
+		.container {
+			padding: 10px;
+			max-width: 1000px;
+			min-height: calc(100vh - 16px);
+		}
+
+		/* Form*/
+		.form-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: calc(100vh - 60px);
+			width: 100%;
+		}
+
+		.form-row {
+			border: 1px solid black;
+		}
+
+		.entry-field {
+			display: grid;
+			grid-template-columns: 70px 1fr;
+			margin: 10px;
+			align-items: center;
+		}
+
+		.input-field {
+			padding: 5px;
+		}
+
+		.sending-data {
+			display: flex;
+			justify-content: center;
+			margin: 10px;
+		}
+
+		.btn-submit {
+			width: 100%;
+		}
+
+		.exit-page {
+			float: right;
+			width: 100px;
+		}
+
+		.btn-submit, .exit-page {
+			background-color: black;
+			border: 1px solid black;
+			color: white;
+			font-size: 16px;
+			height: 30px;
+			transition: all 700ms;
+		}
+
+		.btn-submit:hover, .exit-page:hover {
+			background-color: white;
+			color: black;
+		}
+
+		/*Valid Message*/
+		.valid-msg {
+			text-align: center;
+			color: black;
+			font-size: 18px;
+		}
+
+		.no-valid {
+			color: red;
+		}
+
+		/*Table*/
+		.title-table {
+			text-align: center;
+		}
+
+		.table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th {
+			background-color: #f0f0f0;
+		}
+
+		tr, th, td {
+			border: 1px solid gray;
+			padding: 10px;
+		}
+
+		tr:hover {
+			background-color: #f0f0f0;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+
+		<!-- Форма авторизации -->
+		<div class="form-container">
+			<div class="form-row">
+
+				<!-- Сообщение валидации формы -->
+				<div class="valid-msg-container">
+					<p id="validMsg" class="valid-msg">
+						Введите логин и пароль
+					</p>
+				</div>
+			
+				<form id="firstForm" class="first-form">
+					<div class="entry-field">
+						<label>Логин:</label>
+						<input type="text" id="login" class="input-field" placeholder="Введите логин...">
+					</div>
+
+					<div class="entry-field">
+						<label>Пароль:</label>
+						<input type="password" id="password" class="input-field" placeholder="Введите пароль...">
+					</div>
+
+					<div class="sending-data">
+						<input type="submit" id="btnSubmit" class="btn-submit" value="Отправить">
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<!-- Таблица с данными -->
+		<div id="exitPage"></div>
+		<h2 id="titleTable" class="title-table"></h2>
+		<table id="table" class="table"></table>
+	</div>
+
+	<script type="text/javascript">
+
+		/*Тестовые данные для вывода в таблице*/
+		const dataTable = [
+			{date: '11.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '12.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '13.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '14.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '15.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '16.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+		];
+
+		/*Переменные с id элементов*/
+		let firstForm = document.querySelector('#firstForm'),
+			login = document.querySelector('#login'),
+			password = document.querySelector('#password'), 
+			btnSubmit = document.querySelector('#btnSubmit'),
+			validMsg  = document.querySelector('#validMsg'),
+			table = document.querySelector('#table'),
+			titleTable = document.querySelector('#titleTable'),
+			exitPage = document.querySelector('#exitPage');
+
+			/*Обработка отправки данных формы событием submit*/
+			firstForm.addEventListener('submit', function(event) {
+				event.preventDefault();//Запрещает поведение по умолчанию
+
+				/*Условие если логин и пароль верный выводим таблицу с данными*/
+				if (login.value == 'admin' && password.value == 'qwerty123') {
+
+					/*Добавляем таблице границу*/
+					table.style.border = '1px solid gray';
+
+					/*Скрываем форму авторизации*/
+					document.querySelector('.form-container').style.display = 'none';
+
+					/*Кнопка покинуть страницу*/
+					exitPage.innerHTML = `<button class="exit-page">Выйти</button>`;
+					document.querySelector('.exit-page').onclick = function() {
+						document.location.reload();
+					}
+
+					/*Заголовок таблицы*/
+					titleTable.textContent = 'Заголовок Таблицы';
+
+					/*Создаем шапку для таблицы*/
+					let headerTable = document.createElement('tr');
+						headerTable.innerHTML = `<th>Дата</th>
+												 <th>Описание</th>
+												 <th>Автор</th>`;
+						table.append(headerTable);
+
+					/*Перебираем данные циклом и заполняем таблицу*/
+					for (let i = 0; i < dataTable.length; i++) {
+						let tr = document.createElement('tr');
+						    tr.innerHTML = `<td>${dataTable[i].date}</td>
+								  			<td>${dataTable[i].desc}</td>
+								  			<td>${dataTable[i].author}</td>`;
+						table.append(tr);
+					}
+				}; 
+
+				/*Условие если логин или пароль введен неверно показываем сообщение*/
+				if (login.value !== 'admin' || password.value !== 'qwerty123') {
+					validMsg.textContent = 'Неверный логин или пароль!';
+					validMsg.classList.add('no-valid'); 
+				}; 
+
+				/*Условие если поля ввода пустые*/
+				if (!login.value || !password.value) {
+					validMsg.textContent = 'Не все поля заполнены!';
+					validMsg.classList.add('no-valid'); 
+				}; 
+			});
+	</script>
+
+</body>
+</html>
