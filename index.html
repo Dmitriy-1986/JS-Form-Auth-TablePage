@@ -149,12 +149,12 @@
 
 		/*Тестовые данные для вывода в таблице*/
 		const dataTable = [
-			{date: '11.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
-			{date: '12.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
-			{date: '13.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
-			{date: '14.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
-			{date: '15.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
-			{date: '16.10.2022', desc: 'Описание какого-то текста...', author: 'Dovgal D.'},
+			{date: '11.10.2022', desc: 'Описание какого-то текста...'},
+			{date: '12.10.2022', desc: 'Описание какого-то текста...'},
+			{date: '13.10.2022', desc: 'Описание какого-то текста...'},
+			{date: '14.10.2022', desc: 'Описание какого-то текста...'},
+			{date: '15.10.2022', desc: 'Описание какого-то текста...'},
+			{date: '16.10.2022', desc: 'Описание какого-то текста...'},
 		];
 
 		/*Переменные с id элементов*/
@@ -192,16 +192,14 @@
 					/*Создаем шапку для таблицы*/
 					let headerTable = document.createElement('tr');
 						headerTable.innerHTML = `<th>Дата</th>
-												 <th>Описание</th>
-												 <th>Автор</th>`;
+								        <th>Описание</th>`;
 						table.append(headerTable);
 
 					/*Перебираем данные циклом и заполняем таблицу*/
 					for (let i = 0; i < dataTable.length; i++) {
 						let tr = document.createElement('tr');
 						    tr.innerHTML = `<td>${dataTable[i].date}</td>
-								  			<td>${dataTable[i].desc}</td>
-								  			<td>${dataTable[i].author}</td>`;
+								    <td>${dataTable[i].desc}</td>`;
 						table.append(tr);
 					}
 				}; 
